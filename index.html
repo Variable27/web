@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Cake - Where Every Slice is a Sweet Fantasy!</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff5e6, #ffe6e6);
+        }
+
+        nav {
+            background-color: #4a3434;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cart-icon {
+            color: #ffd700;
+            font-size: 1.2rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            color: #4a3434;
+            margin-bottom: 1rem;
+            font-size: 3rem;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .about-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-section h2 {
+            color: #4a3434;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .about-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-title {
+            color: #4a3434;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .add-to-cart {
+            background-color: #4a3434;
+            color: #ffd700;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #603939;
+        }
+
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: white;
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            z-index: 1001;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4a3434;
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+            max-height: calc(100vh - 350px);
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+        .total-section {
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .checkout-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn {
+            flex-basis: 48%;
+            background-color: #4a3434;
+            color: #ffd700;
+            border: none;
+            padding: 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background-color: #603939;
+        }
+
+        .checkout-btn.gcash {
+            background-color: #00b2ff;
+            color: white;
+        }
+
+        .checkout-btn.gcash:hover {
+            background-color: #0095d9;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">Dream Cake</div>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>DREAM CAKE</h1>
+            <p>Where Every Slice is a Sweet Fantasy!</p>
+            <p>Taste the sweetness for every bite!!</p>
+        </section>
+
+        <section class="about-section">
+            <h2>About Our Dream Cake</h2>
+            <p>The Most Trending Viral Dream Cake has four layers: a Chocolate Cake Layer, a Chocolate Mousse Layer, a Chocolate Ganache Layer followed by a thin Hard Chocolate Shell and topped with a thin Cocoa Powder Layer. If you are a fan of Moist Chocolate Cake then you must try this Easy Torte Cake.</p>
+            <p>This dark chocolate cake is covered in a melted chocolate sauce and topped with chopped candy. As you can see by the photos, it makes a dramatic presentation. If you want to wow your friends and family, then make this today!</p>
+            <p>Delight in bondage cake is an exquisite, multi-tiered cake full of different tastes and compositions; containing layers of sponge or even chocolate cake, cream fillings, fresh fruits or ganache. It has been enhanced further with embellishments such as edible flowers, fancy piping, or shiny glazes.</p>
+        </section>
+
+        <section class="products">
+            <div class="product-card">
+                <img src="img/classic.webp" alt="Classic Dream Cake" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Classic Dream Cake</h3>
+                    <p class="product-description">Our signature four-layered chocolate masterpiece with mousse and ganache.</p>
+                    <p class="product-price">₱100</p>
+                    <button class="add-to-cart" onclick="addToCart('Classic Dream Cake', 100)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="img/bondage.jpeg" alt="Bondage Dream Cake" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Bondage Dream Cake</h3>
+                    <p class="product-description">Multi-tiered excellence with fresh fruits and shiny glaze.</p>
+                    <p class="product-price">₱100</p>
+                    <button class="add-to-cart" onclick="addToCart('Bondage Dream Cake', 100)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="img/chocolate.jpg" alt="Chocolate Fantasy" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Chocolate Fantasy</h3>
+                    <p class="product-description">Rich chocolate cake with melted chocolate sauce and candy toppings.</p>
+                    <p class="product-price">₱100</p>
+                    <button class="add-to-cart" onclick="addToCart('Chocolate Fantasy', 100)">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cart-modal">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items"></div>
+        <div class="total-section">
+            <h3>Total: ₱<span id="cart-total-amount">0</span></h3>
+        </div>
+        <div class="checkout-options">
+            <button class="checkout-btn" onclick="processOrder('cod')">Cash on Delivery</button>
+            <button class="checkout-btn gcash" onclick="processOrder('gcash')">Pay with GCash</button>
+        </div>
+        <div id="gcash-info" class="gcash-info hidden">
+            <h4>GCash Payment Details</h4>
+            <p>Please send payment to:</p>
+            <div class="gcash-number">0917 123 4567</div>
+            <p>Account Name: Dream Cake</p>
+            <p>After payment, please take a screenshot for confirmation.</p>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let cartVisible = false;
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cart-modal');
+            cartVisible = !cartVisible;
+            cartModal.style.display = cartVisible ? 'block' : 'none';
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.querySelector('.cart-items');
+            const cartCount = document.querySelector('.cart-count');
+            const cartTotal = document.getElementById('cart-total-amount');
+            
+            cartCount.textContent = cart.length;
+            cartItems.innerHTML = '';
+            
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        <img src="icon.jpg" alt="${item.name}">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p>₱${item.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartTotal.textContent = total.toLocaleString();
+        }
+
+         function processOrder(method) {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const total = document.getElementById('cart-total-amount').textContent;
+            if (method === 'cod') {
+                alert(`Thank you for your order!\n\nTotal Amount: ₱${total}\n\nOur team will deliver your cakes soon.`);
+            } else if (method === 'gcash') {
+                document.getElementById('gcash-info').classList.remove('hidden');
+                alert(`Thank you for your order!\n\nTotal Amount: ₱${total}\n\nPlease send your payment to our GCash number: 0917 123 4567\n\nDon't forget to take a screenshot of your payment for confirmation.`);
+            }
+
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+    </script>
+</body>
+</html>
